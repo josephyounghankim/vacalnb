@@ -1,5 +1,8 @@
 import React from 'react'
-import { View, Text, Container, Content, Input, Button, Form, Label, Item } from 'native-base'
+import {
+  View, Text, Container, Content, Input, Button, Form, Label, Item,
+  Toast
+} from 'native-base'
 import styles from './Styles/DateInputStyle'
 
 export default class DateInput extends React.Component {
@@ -25,12 +28,12 @@ export default class DateInput extends React.Component {
     if (date.length === 10) {
       const d = new Date(date).getTime()
       if (d >= new Date('2015').getTime() && d < new Date('2050').getTime()) {
-        this.setState({orgDate:date, isEditing:false})
+        this.setState({orgDate:date})
         this.props.onSubmitEditing(new Date(date).toJSON())
         return
       }
     }
-    this.setState({date:this.state.orgDate, isEditing:false})
+    this.setState({date:this.state.orgDate})
   }
 
   render () {
@@ -42,7 +45,6 @@ export default class DateInput extends React.Component {
           value={this.state.date}
           onChangeText={this.onChangeText}
           onEndEditing={this.onSave}
-          onSubmitEditing={this.onSave}
         />
       </Item>
     )

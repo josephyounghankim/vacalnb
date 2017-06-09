@@ -10,7 +10,7 @@ export default class WeekRow extends React.Component {
     const { weekData, handlePress } = this.props
     // console.log('weekData', weekData.vDays)
     return (
-      <View style={{flex:1, flexDirection:'row', justifyContent:'space-around'}}>
+      <View style={{flex:1, flexDirection:'row', justifyContent:'space-around', marginBottom:5}}>
         {
           days.map((day, i) => {
             const date = new Date(new Date(weekData.sDate).getTime()+i*24*3600*1000)

@@ -4,10 +4,10 @@ import { Metrics } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex: 1,
-    maxWidth: 50,
-    maxHeight: 50,
+    width: 46,
+    height: 50,
     // paddingTop: Metrics.titlePadding,
-    backgroundColor: 'lightgreen'
+    backgroundColor: 'rgba(144,238,144,0.0)'
   },
   fullday: {
     backgroundColor: 'red'

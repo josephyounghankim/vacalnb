@@ -9,25 +9,36 @@ export default class DayCell extends React.Component {
   }
 
   render () {
-    const date = moment(this.props.date).format('MM/DD')
+    const { date, type, day } = this.props
+    const monthDate = moment(date).format('MM/DD')
+    const color1 = {
+      'full': 'lightgreen', 'half1': 'lightgreen', 'half2': 'lemonchiffon', 'none': 'lemonchiffon'
+    }
+    const color2 = {
+      'full': 'lightgreen', 'half1': 'lemonchiffon', 'half2': 'lightgreen', 'none': 'lemonchiffon'
+    }
+
     return (
-      <TouchableOpacity style={[styles.container, styles[this.props.type + 'day']]} onPress={this.handlePress}>
-        <Text style={[{color:'black', textAlign:'center'}, styles[this.props.day.toLowerCase() + 'dayText']]}>{this.props.day} {date}</Text>
-      </TouchableOpacity>
+      <View style={{borderColor: 'wheat', borderWidth: 1}}>
+        <View style={{width:46, height:48, position:'absolute'}}>
+          <View style={{backgroundColor:color1[type], width:46, height:24, position:'absolute'}}></View>
+          <View style={{backgroundColor:color2[type], width:46, height:24, top:24, position:'absolute'}}></View>
+        </View>
+        <TouchableOpacity style={{
+            flex: 1,
+            width: 46,
+            height: 48,
+            backgroundColor: 'rgba(144,238,144,0.0)',
+            justifyContent: 'space-around',
+            alignItems: 'center'
+          }} onPress={this.handlePress}>
+          <Text style={[
+            {fontSize:10, fontWeight:'bold', color:'dimgray'},
+            styles[this.props.day.toLowerCase() + 'dayText']]}>{day}</Text>
+          <Text style={{}}>{monthDate}</Text>
+        </TouchableOpacity>
+      </View>
     )
-    /*
-    return (this.props.day == 'Sun') ?
-        (
-          <TouchableOpacity style={styles.container} onPress={this.handlePress}>
-          <Text style={{color:'black', textAlign:'center'}}>{this.props.day} {date}</Text>
-          </TouchableOpacity>
-        ) :
-        (
-          <TouchableHighlight style={styles.container} onPress={this.handlePress}>
-          <Text style={{color:'black', textAlign:'center'}}>{this.props.day} {date}</Text>
-          </TouchableHighlight>
-        )
-    */
   }
 }
 

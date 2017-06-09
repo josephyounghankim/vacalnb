@@ -21,11 +21,11 @@ export default class NumberInput extends React.Component {
   onSave = () => {
     const number = parseInt(this.state.number) || -1
     if ( number >= 0 && number < 100) {
-      this.setState({orgNumber:''+number, isEditing:false})
+      this.setState({orgNumber:''+number})
       this.props.onSubmitEditing(''+number)
       return
     }
-    this.setState({number:this.state.orgNumber, isEditing:false})
+    this.setState({number:this.state.orgNumber})
   }
 
   render () {
@@ -37,7 +37,6 @@ export default class NumberInput extends React.Component {
           value={this.state.number}
           onChangeText={this.onChangeText}
           onEndEditing={this.onSave}
-          onSubmitEditing={this.onSave}
         />
       </Item>
     )
