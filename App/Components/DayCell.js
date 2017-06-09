@@ -13,32 +13,33 @@ export default class DayCell extends React.Component {
   }
   render () {
     const { date, type, day } = this.props
-    const monthDate = moment(date).format('MM/DD')
+    let monthDate = moment(date).format('D')
+    if (monthDate === '1') monthDate += moment(date).format(' MMM')
     const color1 = {
-      'full': 'lightgreen', 'half1': 'lightgreen', 'half2': 'lemonchiffon', 'none': 'lemonchiffon'
+      'full': 'lightgreen', 'half1': 'lightgreen', 'half2': 'lemonchiffon', 'holiday':'lemonchiffon', 'none': 'lemonchiffon'
     }
     const color2 = {
-      'full': 'lightgreen', 'half1': 'lemonchiffon', 'half2': 'lightgreen', 'none': 'lemonchiffon'
+      'full': 'lightgreen', 'half1': 'lemonchiffon', 'half2': 'lightgreen', 'holiday':'lemonchiffon', 'none': 'lemonchiffon'
     }
 
     return (
       <View style={{borderColor: 'wheat', borderWidth: 1}}>
-        <View style={{width:46, height:48, position:'absolute'}}>
-          <View style={{backgroundColor:color1[type], width:46, height:24, position:'absolute'}}></View>
-          <View style={{backgroundColor:color2[type], width:46, height:24, top:24, position:'absolute'}}></View>
+        <View style={{width:46, height:46, position:'absolute'}}>
+          <View style={{backgroundColor:color1[type], width:23, height:46, position:'absolute'}}></View>
+          <View style={{backgroundColor:color2[type], width:23, height:46, left:23, position:'absolute'}}></View>
         </View>
         <TouchableOpacity style={{
             flex: 1,
             width: 46,
-            height: 48,
-            backgroundColor: 'rgba(144,238,144,0.0)',
+            height: 46,
+            backgroundColor: 'rgba(0,0,0,0.0)',
             justifyContent: 'space-around',
             alignItems: 'center'
           }} onPress={this.handlePress}>
           <Text style={[
             {fontSize:10, fontWeight:'bold', color:'dimgray'},
-            styles[this.props.day.toLowerCase() + 'dayText']]}>{day}</Text>
-          <Text style={{}}>{monthDate}</Text>
+            styles[day.toLowerCase() + 'dayText'], styles[type+'Text']]}>{day}</Text>
+          <Text style={[{fontWeight:'bold'},styles[day.toLowerCase() + 'dayText'], styles[type+'Text']]}>{monthDate}</Text>
         </TouchableOpacity>
       </View>
     )

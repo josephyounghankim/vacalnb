@@ -59,7 +59,8 @@ export const toggleVacDay = (state, action) => {
     const v = vDays[0]
     if (v.type === 'full') v.type = 'half1'
     else if (v.type === 'half1') v.type = 'half2'
-    else if (v.type === 'half2') vacDays.splice(vacDays.indexOf(v),1)
+    else if (v.type === 'half2') v.type = 'holiday'
+    else if (v.type === 'holiday') vacDays.splice(vacDays.indexOf(v),1)
   }
   return state.merge({ vacDays })
 }

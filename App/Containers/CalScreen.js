@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { Image, ListView, BackAndroid } from 'react-native'
+import { Image, ListView, BackAndroid, Platform } from 'react-native'
 import {
   ListItem, Item, Card, CardItem, Text,
   View, Thumbnail, Container, Header, Content,
@@ -84,7 +84,8 @@ class CalScreen extends React.Component {
       const dTime = new Date(day.date).getTime()
       if (dTime >= sTime && dTime < (sTime + aYearTime)) {
         if (day.type === 'half1' || day.type === 'half2') return count + 0.5
-        return count + 1.0
+        if (day.type === 'full') return count + 1.0
+        return count
       }
       return count
     }, 0)
@@ -92,11 +93,11 @@ class CalScreen extends React.Component {
     return (
       <Container >
         <Header>
-          <Body>
-            <Button transparent dark>
-              <Icon name="calculator" />
-              <Title>Vacation Calculator</Title>
-            </Button>
+          <Body style={{flexDirection:'row', justifyContent:'center'}}>
+            <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+              <Icon style={{fontSize:22, color:(Platform.OS=='android' ? 'white' : null)}} name="calculator" />
+              <Title>  Vacation Calculator</Title>
+            </View>
           </Body>
         </Header>
         <Content padder>
@@ -130,9 +131,13 @@ class CalScreen extends React.Component {
             cal={this.props.cal}
             handlePress={this.handlePress}
           />
-          <Button transparent small success onPress={this.onFetchSampleData}>
-            <Text>Fetch Sample</Text>
-          </Button>
+          { (startDate == '2016-09-14T00:00:00.000Z') &&
+            (
+              <Button transparent small success onPress={this.onFetchSampleData}>
+                <Text>Fetch Sample</Text>
+              </Button>
+            )
+          }
         </Content>
       </Container>
     )

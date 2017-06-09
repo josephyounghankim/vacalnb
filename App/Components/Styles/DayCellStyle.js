@@ -23,5 +23,8 @@ export default StyleSheet.create({
   },
   satdayText: {
     color: 'green'
+  },
+  holidayText: {
+    color: 'red'
   }
 })
