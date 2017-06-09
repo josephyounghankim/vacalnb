@@ -100,13 +100,15 @@ class CalScreen extends React.Component {
           </Body>
         </Header>
         <Content padder>
-          <DateInput date={startDate} title='Start Date:' onSubmitEditing={this.handleSubmitStartDate} />
-          <NumberInput number={''+maxVacDays} title='Max Days:' onSubmitEditing={this.handleSubmitMaxVacDays} />
+          <View style={{flexDirection:'row', justifyContent:'space-around'}}>
+            <DateInput date={startDate} title='Base Date:' onSubmitEditing={this.handleSubmitStartDate} />
+            <NumberInput number={''+maxVacDays} title='Max:' onSubmitEditing={this.handleSubmitMaxVacDays} />
+          </View>
           <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:20}}>
             <H1>{''+(maxVacDays - daysCount)}</H1>
             <Text style={{color:'gray'}}> days left</Text>
           </View>
-          <View style={{flexDirection:'row', marginTop:20, marginBottom:10}}>
+          <View style={{flexDirection:'row', marginTop:15, marginBottom:5}}>
             <Left>
               <Button transparent small onPress={this.gotoPrevMonth}>
                 <Icon name="arrow-dropleft" />

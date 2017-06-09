@@ -3,6 +3,9 @@ import { ListItem, Item, Card, CardItem, Text, View, Thumbnail, Container, Heade
 import styles from './Styles/MonthViewStyle'
 import WeekRow from '../Components/WeekRow'
 
+const DAY_TIME = 3600 * 24 * 1000
+const WEEK_TIME = 7 * DAY_TIME
+
 export default class MonthView extends React.Component {
 
   state: {
@@ -14,12 +17,12 @@ export default class MonthView extends React.Component {
     const { startMonth, cal } = props
     const { startDate, vacDays } = cal
     let realStartDate = new Date(startMonth)
-    realStartDate = new Date(realStartDate.getTime() - (realStartDate.getDay()) * 3600 * 24 * 1000 )
+    realStartDate = new Date(realStartDate.getTime() - (realStartDate.getDay()) * DAY_TIME )
 
     const weekObjects = []
     for(let i=0; i < 6; i++) {
-      const sDate = new Date(realStartDate.getTime() + i * (7 * 3600 * 24 * 1000)).toJSON()
-      const eDate = new Date(new Date(sDate).getTime() + (7 * 3600 * 24 * 1000)).toJSON()
+      const sDate = new Date(realStartDate.getTime() + i * (WEEK_TIME)).toJSON()
+      const eDate = new Date(new Date(sDate).getTime() + (WEEK_TIME)).toJSON()
       const vDays = vacDays.filter(vday => (vday.date >= sDate && vday.date < eDate ))
       // if (vDays.length>0) console.log( 'vacDays && vDays:', vacDays, vDays)
       // const s = new Date(sDate)

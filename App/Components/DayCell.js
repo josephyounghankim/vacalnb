@@ -7,7 +7,10 @@ export default class DayCell extends React.Component {
   handlePress  = event => {
     this.props.handlePress(this.props.date, this.props.weekIdx)
   }
-
+  shouldComponentUpdate (nextProps, nextState) {
+    if (this.props.type === nextProps.type && this.props.date === nextProps.date) return false
+    return true
+  }
   render () {
     const { date, type, day } = this.props
     const monthDate = moment(date).format('MM/DD')
