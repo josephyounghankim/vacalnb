@@ -8,6 +8,9 @@ import {
   Title, Button, Left, Right, Body, Icon,
   H1, H2, H3, Toast
 } from 'native-base'
+
+import Orientation from 'react-native-orientation'
+
 // import { Col, Row, Grid } from 'react-native-easy-grid'
 import DateInput from '../Components/DateInput'
 import NumberInput from '../Components/NumberInput'
@@ -48,14 +51,19 @@ class CalScreen extends React.Component {
 
   constructor (props) {
     super(props)
-    console.log('constructor:', props)
     this.state = {
       startMonth: new Date().toJSON().substr(0,7)
     }
   }
 
+  componentDidMount() {
+    Orientation.lockToPortrait();
+  }
+
   componentWillMount () {
-    console.log('componentWillMount:', this.props.cal)
+    const initial = Orientation.getInitialOrientation();
+    console.log('initial Orientation: ', initial)
+    if (initial === 'PORTRAIT') {} else {}
   }
 
   componentWillReceiveProps (newProps) {
