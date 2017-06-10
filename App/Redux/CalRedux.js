@@ -8,7 +8,8 @@ const { Types, Creators } = createActions({
   updateStartDate: ['startDate'],
   updateMaxVacDays: ['maxVacDays'],
   updateEditLock: ['editLock'],
-  fetchSampleData: null
+  fetchSampleData: null,
+  resetAll: null
 })
 
 export const CalTypes = Types
@@ -26,6 +27,10 @@ export const INITIAL_STATE = Immutable({
 /* ------------- Reducers ------------- */
 
 // request the data from an api
+export const resetAll = state => {
+  return state.merge(INITIAL_STATE)
+}
+
 export const fetchSampleData = state => {
   const vacDays = [
     { date: new Date('2016-12-27').toJSON(), type: 'full' },
@@ -94,6 +99,7 @@ export const updateEditLock = (state, action) => {
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_SAMPLE_DATA]: fetchSampleData,
+  [Types.RESET_ALL]: resetAll,
   [Types.UPDATE_VAC_DAY]: toggleVacDay,
   [Types.UPDATE_START_DATE]: updateStartDate,
   [Types.UPDATE_MAX_VAC_DAYS]: updateMaxVacDays,

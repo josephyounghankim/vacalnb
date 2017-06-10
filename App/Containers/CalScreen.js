@@ -46,6 +46,17 @@ class CalScreen extends React.Component {
     this.props.updateMaxVacDays(parseInt(maxVacDays))
   }
 
+  handleReset = () => {
+    this._resetCount++
+    console.log('handleReset', this._resetCount)
+    if (this._resetCount >= 5) {
+      this._resetCount = 0
+      this.props.resetAll()
+    } else {
+      if (this._resetCount === 1) setTimeout((() => this._resetCount=0),20000)
+    }
+  }
+
   onFetchSampleData = () => {
     // fetch my sample data on 2016-2017
     this.props.fetchSampleData()
@@ -57,6 +68,7 @@ class CalScreen extends React.Component {
       startMonth: new Date().toJSON().substr(0,7),
       spinnerOn: false
     }
+    this._resetCount = 0
   }
 
   componentDidMount() {
@@ -164,13 +176,22 @@ class CalScreen extends React.Component {
             cal={this.props.cal}
             handlePress={this.handlePress}
           />
-          { (startDate == '2016-09-14T00:00:00.000Z') &&
-            (
-              <Button transparent small success onPress={this.onFetchSampleData}>
-                <Text>Fetch Sample</Text>
-              </Button>
-            )
-          }
+        <View style={{flexDirection:'row', marginTop:10}}>
+            { (startDate == '2016-09-14T00:00:00.000Z') &&
+              (
+                <Button transparent small success onPress={this.onFetchSampleData}>
+                  <Text>Fetch Sample</Text>
+                </Button>
+              )
+            }
+            <Right>
+              { (!editLock) && (
+                <Button transparent small danger onLongPress={this.handleReset}>
+                  <Icon name='trash' />
+                </Button>
+              )}
+            </Right>
+          </View>
         </Content>
       </Container>
     )
@@ -186,6 +207,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchSampleData: () => dispatch(CalActions.fetchSampleData()),
+    resetAll: () => dispatch(CalActions.resetAll()),
     updateVacDay: date => dispatch(CalActions.updateVacDay(date)),
     updateStartDate: startDate => dispatch(CalActions.updateStartDate(startDate)),
     updateMaxVacDays: maxVacDays => dispatch(CalActions.updateMaxVacDays(maxVacDays)),
