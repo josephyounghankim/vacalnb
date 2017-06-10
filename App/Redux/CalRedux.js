@@ -18,7 +18,7 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  startDate: new Date('2016-01-01').toJSON(),
+  startDate: new Date('2017-01-01').toJSON(),
   maxVacDays: 20,
   vacDays: [],
   editLock: false
