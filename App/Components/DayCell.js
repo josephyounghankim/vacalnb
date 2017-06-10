@@ -21,9 +21,11 @@ export default class DayCell extends React.Component {
     const color2 = {
       'full': 'lightgreen', 'half1': 'lemonchiffon', 'half2': 'lightgreen', 'holiday':'lemonchiffon', 'none': 'lemonchiffon'
     }
-
+    const borderColor = {
+      'holiday': '#ff3030', 'full': '#548b54', 'half1': '#548b54', 'half2': '#548b54'
+    }
     return (
-      <View style={{borderColor: 'wheat', borderWidth: 1}}>
+      <View style={{borderColor: borderColor[type] || 'wheat', borderWidth: 1}}>
         <View style={{width:46, height:46, position:'absolute'}}>
           <View style={{backgroundColor:color1[type], width:23, height:46, position:'absolute'}}></View>
           <View style={{backgroundColor:color2[type], width:23, height:46, left:23, position:'absolute'}}></View>
