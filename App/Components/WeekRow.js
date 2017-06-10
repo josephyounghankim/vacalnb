@@ -5,10 +5,18 @@ import DayCell from './DayCell'
 
 export default class WeekRow extends React.Component {
 
+  shouldComponentUpdate (nextProps, nextState) {
+    if (this.props.weekData.checkSum === nextProps.weekData.checkSum) {
+      console.log('pass weekrow update:', this.props.weekData.weekIdx)
+      return false
+    }
+    return true
+  }
+
   render () {
     const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
     const { weekData, handlePress } = this.props
-    // console.log('weekData', weekData.vDays)
+    console.log('render weekrow:', weekData.weekIdx)
     return (
       <View style={{flex:1, flexDirection:'row', justifyContent:'space-around', marginBottom:5}}>
         {
