@@ -6,7 +6,7 @@ import {
   ListItem, Item, Card, CardItem, Text,
   View, Thumbnail, Container, Header, Content,
   Title, Button, Left, Right, Body, Icon,
-  H1, H2, H3, Toast
+  H1, H2, H3, Toast, Spinner
 } from 'native-base'
 
 import Orientation from 'react-native-orientation'
@@ -27,12 +27,12 @@ class CalScreen extends React.Component {
 
   state: {
     startMonth: String,
-    editLock: Boolean
+    spinnerOn: Boolean
   }
 
   handlePress = (date) => {
     console.log('handlePress:', date)
-    if (this.state.editLock) return
+    if (this.props.cal.editLock) return
     this.props.updateVacDay(date)
   }
 
@@ -55,7 +55,7 @@ class CalScreen extends React.Component {
     super(props)
     this.state = {
       startMonth: new Date().toJSON().substr(0,7),
-      editLock: true
+      spinnerOn: false
     }
   }
 
@@ -74,19 +74,23 @@ class CalScreen extends React.Component {
     }
   }
 
+  componentDidUpdate () {
+    if (this.state.spinnerOn) this.setState({spinnerOn:false})
+  }
+
   gotoPrevMonth = () => {
     const { startMonth } = this.state
     const month = new Date(new Date(startMonth).getTime() - 24*3600*1000).toJSON().substr(0,7)
-    this.setState({startMonth:month})
+    this.setState({startMonth:month, spinnerOn:true})
   }
   gotoNextMonth = () => {
     const { startMonth } = this.state
     const month = new Date(new Date(startMonth).getTime() + 32*24*3600*1000).toJSON().substr(0,7)
-    this.setState({startMonth:month})
+    this.setState({startMonth:month, spinnerOn:true})
   }
   render () {
-    const { startDate, maxVacDays, vacDays } = this.props.cal
-    const { startMonth, editLock } = this.state
+    const { startDate, maxVacDays, vacDays, editLock } = this.props.cal
+    const { startMonth, spinnerOn } = this.state
     // console.log( 'cal:', this.props.cal )
 
     const sTime = new Date(startDate).getTime()
@@ -115,7 +119,7 @@ class CalScreen extends React.Component {
         <Content padder>
           <View style={{flexDirection:'row', justifyContent:'space-around'}}>
             <DateInput date={startDate} title='Base Date:' onSubmitEditing={this.handleSubmitStartDate} />
-            <NumberInput number={''+maxVacDays} title='Max:' onSubmitEditing={this.handleSubmitMaxVacDays} />
+            <NumberInput number={''+maxVacDays} title='Max Days:' onSubmitEditing={this.handleSubmitMaxVacDays} />
           </View>
           <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:20}}>
             <Left />
@@ -126,7 +130,7 @@ class CalScreen extends React.Component {
             <Right>
               <Button transparent small
                 danger={editLock} success={!editLock}
-                onPress={() => this.setState({editLock:!editLock})}
+                onPress={() => this.props.updateEditLock(!editLock)}
               >
                 <Icon name={editLock ? 'lock' : 'unlock'} />
               </Button>
@@ -136,20 +140,21 @@ class CalScreen extends React.Component {
               flexDirection:'row',
               marginTop:15, marginBottom:0,
               borderColor:'lightgray',
-              borderTopWidth:1
+              borderTopWidth:1,
+              justifyContent:'center',
+              alignItems:'center'
             }}>
             <Left>
               <Button transparent small onPress={this.gotoPrevMonth}>
                 <Icon name="arrow-dropleft" />
-                <Text>Prev</Text>
               </Button>
             </Left>
             <Button transparent large>
-              <Text>{startMonth}</Text>
+              <Text style={{opacity: spinnerOn ? 0.3 : 1.0}}>{startMonth}</Text>
             </Button>
+            {spinnerOn && <Spinner color='#157efc' style={{position:'absolute'}}/> }
             <Right>
               <Button transparent small onPress={this.gotoNextMonth}>
-                <Text>Next</Text>
                 <Icon name="arrow-dropright" />
               </Button>
             </Right>
@@ -183,7 +188,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchSampleData: () => dispatch(CalActions.fetchSampleData()),
     updateVacDay: date => dispatch(CalActions.updateVacDay(date)),
     updateStartDate: startDate => dispatch(CalActions.updateStartDate(startDate)),
-    updateMaxVacDays: maxVacDays => dispatch(CalActions.updateMaxVacDays(maxVacDays))
+    updateMaxVacDays: maxVacDays => dispatch(CalActions.updateMaxVacDays(maxVacDays)),
+    updateEditLock: editLock => dispatch(CalActions.updateEditLock(editLock))
   }
 }
 

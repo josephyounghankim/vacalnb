@@ -4,11 +4,10 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  addVacDay: ['vacDay'],
-  removeVacDay: ['vacDay'],
   updateVacDay: ['date'],
   updateStartDate: ['startDate'],
   updateMaxVacDays: ['maxVacDays'],
+  updateEditLock: ['editLock'],
   fetchSampleData: null
 })
 
@@ -20,7 +19,8 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   startDate: new Date('2016-01-01').toJSON(),
   maxVacDays: 20,
-  vacDays: []
+  vacDays: [],
+  editLock: false
 })
 
 /* ------------- Reducers ------------- */
@@ -75,6 +75,11 @@ export const updateMaxVacDays = (state, action) => {
   return state.merge({ maxVacDays })
 }
 
+export const updateEditLock = (state, action) => {
+  const { editLock } = action
+  return state.merge({ editLock })
+}
+
 // // successful api lookup
 // export const success = (state, action) => {
 //   const { payload } = action
@@ -91,5 +96,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_SAMPLE_DATA]: fetchSampleData,
   [Types.UPDATE_VAC_DAY]: toggleVacDay,
   [Types.UPDATE_START_DATE]: updateStartDate,
-  [Types.UPDATE_MAX_VAC_DAYS]: updateMaxVacDays
+  [Types.UPDATE_MAX_VAC_DAYS]: updateMaxVacDays,
+  [Types.UPDATE_EDIT_LOCK]: updateEditLock
 })
