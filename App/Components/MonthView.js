@@ -31,13 +31,12 @@ export default class MonthView extends React.Component {
 
       // if (vDays.length>0) console.log( 'vacDays && vDays:', vacDays, vDays)
       const s = new Date(sDate)
-      const shiftOffset = { full:0, half1:7, half2:14, holiday:21 }
+      const shiftOffset = { full:8, half1:0, half2:8, holiday:0 }
       const checkSum = vDays.reduce(((acc, vday) => {
         const d = new Date(vday.date)
         const diff = (d.getTime() - s.getTime())/(DAY_TIME)
-        return acc | (((2 << diff)) << shiftOffset[vday.type])
+        return (acc | (((2 << diff)) << shiftOffset[vday.type])) + d.getTime()
       }), realStartDate.getTime())
-
       weekObjects.push({ weekIdx: i, checkSum, sDate, eDate, vDays })
     }
     this.setState({ weekObjects })
@@ -48,12 +47,12 @@ export default class MonthView extends React.Component {
   }
 
   componentWillMount () {
-    console.log('componentWillMount:', this.props.cal)
+    // console.log('componentWillMount:', this.props.cal)
     this.updateWeekObjects(this.props)
   }
 
   componentWillReceiveProps (newProps) {
-    console.log('componentWillReceiveProps is called:', newProps)
+    // console.log('componentWillReceiveProps is called:', newProps)
     if (newProps.cal) {
       this.updateWeekObjects(newProps)
     }
