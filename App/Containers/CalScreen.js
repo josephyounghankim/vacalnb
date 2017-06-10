@@ -26,11 +26,13 @@ import styles from './Styles/CalScreenStyle'
 class CalScreen extends React.Component {
 
   state: {
-    startMonth: String
+    startMonth: String,
+    editLock: Boolean
   }
 
   handlePress = (date) => {
     console.log('handlePress:', date)
+    if (this.state.editLock) return
     this.props.updateVacDay(date)
   }
 
@@ -52,7 +54,8 @@ class CalScreen extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      startMonth: new Date().toJSON().substr(0,7)
+      startMonth: new Date().toJSON().substr(0,7),
+      editLock: true
     }
   }
 
@@ -83,7 +86,7 @@ class CalScreen extends React.Component {
   }
   render () {
     const { startDate, maxVacDays, vacDays } = this.props.cal
-    const { startMonth } = this.state
+    const { startMonth, editLock } = this.state
     // console.log( 'cal:', this.props.cal )
 
     const sTime = new Date(startDate).getTime()
@@ -97,6 +100,7 @@ class CalScreen extends React.Component {
       }
       return count
     }, 0)
+    const daysLeft = maxVacDays - daysCount
 
     return (
       <Container >
@@ -114,17 +118,33 @@ class CalScreen extends React.Component {
             <NumberInput number={''+maxVacDays} title='Max:' onSubmitEditing={this.handleSubmitMaxVacDays} />
           </View>
           <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:20}}>
-            <H1>{''+(maxVacDays - daysCount)}</H1>
-            <Text style={{color:'gray'}}> days left</Text>
+            <Left />
+            <H1>{''+daysLeft}</H1>
+            <Text style={{color:'gray'}}>
+              { (daysLeft <= 1.0) ? ' day left' : ' days left' }
+            </Text>
+            <Right>
+              <Button transparent small
+                danger={editLock} success={!editLock}
+                onPress={() => this.setState({editLock:!editLock})}
+              >
+                <Icon name={editLock ? 'lock' : 'unlock'} />
+              </Button>
+            </Right>
           </View>
-          <View style={{flexDirection:'row', marginTop:15, marginBottom:5}}>
+          <View style={{
+              flexDirection:'row',
+              marginTop:15, marginBottom:0,
+              borderColor:'lightgray',
+              borderTopWidth:1
+            }}>
             <Left>
               <Button transparent small onPress={this.gotoPrevMonth}>
                 <Icon name="arrow-dropleft" />
                 <Text>Prev</Text>
               </Button>
             </Left>
-            <Button transparent small>
+            <Button transparent large>
               <Text>{startMonth}</Text>
             </Button>
             <Right>
