@@ -31,7 +31,7 @@ export default class NumberInput extends React.Component {
   render () {
     const { title } = this.props
     return (
-      <Item style={{flex:1}}>
+      <Item stackedLabel>
         <Label style={{fontSize:12}}>{title}</Label>
         <Input
           value={this.state.number}

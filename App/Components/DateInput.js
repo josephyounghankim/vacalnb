@@ -39,7 +39,7 @@ export default class DateInput extends React.Component {
   render () {
     const { title } = this.props
     return (
-      <Item style={{flex:2}}>
+      <Item style={{flex:2}} stackedLabel>
         <Label style={{fontSize:12}}>{title}</Label>
         <Input
           value={this.state.date}

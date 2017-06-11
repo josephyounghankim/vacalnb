@@ -6,7 +6,8 @@ import {
   ListItem, Item, Card, CardItem, Text,
   View, Thumbnail, Container, Header, Content,
   Title, Button, Left, Right, Body, Icon,
-  H1, H2, H3, Toast, Spinner
+  H1, H2, H3, Toast, Spinner,
+  Label, Input
 } from 'native-base'
 
 import Orientation from 'react-native-orientation'
@@ -121,32 +122,35 @@ class CalScreen extends React.Component {
     return (
       <Container >
         <Header>
-          <Body style={{flexDirection:'row', justifyContent:'center'}}>
+          <Left style={{flex:1}}/>
+          <Body style={{flex:3, flexDirection:'row', justifyContent:'center'}}>
             <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
               <Icon style={{fontSize:22, color:(Platform.OS=='android' ? 'white' : null)}} name="calculator" />
               <Title>  Vacation Calculator</Title>
             </View>
           </Body>
+          <Right style={{flex:1}}>
+            <Button transparent small
+              danger={editLock} success={!editLock}
+              onPress={() => this.props.updateEditLock(!editLock)}
+            >
+              <Icon style={{fontSize:20}} name={editLock ? 'lock' : 'unlock'} />
+            </Button>
+          </Right>
         </Header>
         <Content padder>
-          <View style={{flexDirection:'row', justifyContent:'space-around'}}>
+          <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
             <DateInput date={startDate} title='Base Date:' onSubmitEditing={this.handleSubmitStartDate} />
+            <View style={{flex:2}}>
+              <Item stackedLabel>
+                <Label style={{fontSize:12}}>Days Left:</Label>
+                <Input style={{fontSize:30}}
+                  value={''+daysLeft}
+                  disabled
+                />
+              </Item>
+            </View>
             <NumberInput number={''+maxVacDays} title='Max Days:' onSubmitEditing={this.handleSubmitMaxVacDays} />
-          </View>
-          <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:20}}>
-            <Left />
-            <H1>{''+daysLeft}</H1>
-            <Text style={{color:'gray'}}>
-              { (daysLeft <= 1.0) ? ' day left' : ' days left' }
-            </Text>
-            <Right>
-              <Button transparent small
-                danger={editLock} success={!editLock}
-                onPress={() => this.props.updateEditLock(!editLock)}
-              >
-                <Icon name={editLock ? 'lock' : 'unlock'} />
-              </Button>
-            </Right>
           </View>
           <View style={{
               flexDirection:'row',
@@ -177,6 +181,14 @@ class CalScreen extends React.Component {
             handlePress={this.handlePress}
           />
         <View style={{flexDirection:'row', marginTop:10}}>
+          <Left>
+            <Button transparent small
+              danger={editLock} success={!editLock}
+              onPress={() => this.props.updateEditLock(!editLock)}
+            >
+              <Icon name={editLock ? 'lock' : 'unlock'} />
+            </Button>
+          </Left>
             { (startDate == '2016-09-14T00:00:00.000Z') &&
               (
                 <Button transparent small success onPress={this.onFetchSampleData}>
