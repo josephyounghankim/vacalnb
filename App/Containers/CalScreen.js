@@ -142,9 +142,9 @@ class CalScreen extends React.Component {
           <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
             <DateInput date={startDate} title='Base Date:' onSubmitEditing={this.handleSubmitStartDate} />
             <View style={{flex:2}}>
-              <Item stackedLabel>
+              <Item stackedLabel style={{borderBottomWidth:0}}>
                 <Label style={{fontSize:12}}>Days Left:</Label>
-                <Input style={{fontSize:30}}
+                <Input style={{fontSize:30, fontWeight:'bold', color:'black'}}
                   value={''+daysLeft}
                   disabled
                 />
@@ -154,26 +154,21 @@ class CalScreen extends React.Component {
           </View>
           <View style={{
               flexDirection:'row',
-              marginTop:15, marginBottom:0,
+              marginTop:7, marginBottom:0,
               borderColor:'lightgray',
               borderTopWidth:1,
-              justifyContent:'center',
+              justifyContent:'space-between',
               alignItems:'center'
             }}>
-            <Left>
-              <Button transparent small onPress={this.gotoPrevMonth}>
-                <Icon name="arrow-dropleft" />
-              </Button>
-            </Left>
-            <Button transparent large>
+            <Button transparent style={{flex:1, justifyContent:'flex-start', marginTop:14, paddingLeft:0}} small onPress={this.gotoPrevMonth}>
+              <Icon name="arrow-dropleft" />
+            </Button>
+            <Button transparent style={{flex:3, justifyContent:'center'}} large>
               <Text style={{opacity: spinnerOn ? 0.3 : 1.0}}>{startMonth}</Text>
             </Button>
-            {spinnerOn && <Spinner color='#157efc' style={{position:'absolute'}}/> }
-            <Right>
-              <Button transparent small onPress={this.gotoNextMonth}>
-                <Icon name="arrow-dropright" />
-              </Button>
-            </Right>
+            <Button transparent style={{flex:1, justifyContent:'flex-end', marginTop:14, paddingRight:0}} small onPress={this.gotoNextMonth}>
+              <Icon name="arrow-dropright" />
+            </Button>
           </View>
           <MonthView
             startMonth={startMonth}
@@ -181,14 +176,7 @@ class CalScreen extends React.Component {
             handlePress={this.handlePress}
           />
         <View style={{flexDirection:'row', marginTop:10}}>
-          <Left>
-            <Button transparent small
-              danger={editLock} success={!editLock}
-              onPress={() => this.props.updateEditLock(!editLock)}
-            >
-              <Icon name={editLock ? 'lock' : 'unlock'} />
-            </Button>
-          </Left>
+          <Left />
             { (startDate == '2016-09-14T00:00:00.000Z') &&
               (
                 <Button transparent small success onPress={this.onFetchSampleData}>
