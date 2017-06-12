@@ -139,18 +139,22 @@ class CalScreen extends React.Component {
           </Right>
         </Header>
         <Content padder>
-          <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
-            <DateInput date={startDate} title='Base Date:' onSubmitEditing={this.handleSubmitStartDate} />
-            <View style={{flex:2}}>
-              <Item stackedLabel style={{borderBottomWidth:0}}>
-                <Label style={{fontSize:12}}>Days Left:</Label>
-                <Input style={{fontSize:30, fontWeight:'bold', color:'black'}}
+          <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'flex-start', height:100}}>
+            <Left style={{flex:2}}>
+              <DateInput date={startDate} title='Base Date:' onSubmitEditing={this.handleSubmitStartDate} />
+            </Left>
+            <View style={{flex:1, backgroundColor:'green'}}>
+              <Item stackedLabel style={{borderBottomWidth:0, flex:1, justifyContent:'center', alignItems:'center'}}>
+                <Label style={{flex:1, fontSize:12}}>Days Left:</Label>
+                <Input style={{flex:1, textAlign:'center', fontSize:30, fontWeight:'bold', color:'black'}}
                   value={''+daysLeft}
                   disabled
                 />
               </Item>
             </View>
-            <NumberInput number={''+maxVacDays} title='Max Days:' onSubmitEditing={this.handleSubmitMaxVacDays} />
+            <Right style={{flex:2}}>
+              <NumberInput number={''+maxVacDays} title='Max Days:' onSubmitEditing={this.handleSubmitMaxVacDays} />
+            </Right>
           </View>
           <View style={{
               flexDirection:'row',
