@@ -29,11 +29,12 @@ export default class NumberInput extends React.Component {
   }
 
   render () {
-    const { title } = this.props
+    const { title, editLock } = this.props
     return (
-      <Item style={{borderBottomWidth:0, backgroundColor:'lightgreen'}} stackedLabel>
-        <Label style={{fontSize:12}}>{title}</Label>
-        <Input
+      <Item style={{flex:1, alignItems:'flex-end', borderBottomWidth:0}} stackedLabel>
+        <Text style={{flex:1, fontSize:12}}>{title}</Text>
+        <Input style={{flex:1, textAlign:'right', marginRight:5}}
+          disabled={editLock}
           value={this.state.number}
           onChangeText={this.onChangeText}
           onEndEditing={this.onSave}
