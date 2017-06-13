@@ -12,7 +12,7 @@ export default class DaysLeftView extends React.Component {
     return (
       <Item stackedLabel style={{flex:1, borderBottomWidth:0}}>
         <Text style={{flex:1, fontSize:12}}>Days Left:</Text>
-        <Input style={{flex:1, textAlign:'center', fontSize:30, fontWeight:'bold', color:'black'}}
+        <Input style={{flex:1, maxWidth:'100%', textAlign:'center', fontSize:30, fontWeight:'bold', color:'black'}}
           value={''+daysLeft}
           disabled
         />
