@@ -41,7 +41,7 @@ export default class DateInput extends React.Component {
     return (
       <Item style={{flex:1, alignItems:'flex-start', borderBottomWidth:0}} stackedLabel>
         <Text style={{flex:1, fontSize:12}}>{title}</Text>
-        <Input style={{flex:1, textAlign:'left', marginLeft:5}}
+        <Input style={{flex:1, maxWidth:'100%', textAlign:'left', marginLeft:5}}
           disabled={editLock}
           value={this.state.date}
           onChangeText={this.onChangeText}
