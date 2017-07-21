@@ -35,6 +35,7 @@
     "react-native-i18n": "1.0.0",
     "react-native-orientation": "git+https://github.com/yamill/react-native-orientation.git",
     "react-native-router-flux": "3.38.0",
+    "react-native-splash-screen": "^2.1.0",
     "react-native-vector-icons": "4.1.1",
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",

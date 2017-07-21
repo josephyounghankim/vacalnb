@@ -11,6 +11,7 @@ import {
 } from 'native-base'
 
 import Orientation from 'react-native-orientation'
+import SplashScreen from 'react-native-splash-screen'
 
 // import { Col, Row, Grid } from 'react-native-easy-grid'
 import VacHeader from '../Components/VacHeader'
@@ -65,6 +66,7 @@ class CalScreen extends React.Component {
 
   componentDidMount() {
     Orientation.lockToPortrait();
+    SplashScreen.hide();
   }
 
   componentWillMount () {

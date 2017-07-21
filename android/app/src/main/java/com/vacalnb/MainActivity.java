@@ -1,8 +1,10 @@
 package com.vacalnb;
 
 import com.facebook.react.ReactActivity;
+import android.os.Bundle;
 import android.content.Intent; // <--- import
 import android.content.res.Configuration; // <--- import
+import com.cboy.rn.splashscreen.SplashScreen; // here
 
 public class MainActivity extends ReactActivity {
 
@@ -13,6 +15,12 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "vacalnb";
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this);  // here
+        super.onCreate(savedInstanceState);
     }
 
     @Override
